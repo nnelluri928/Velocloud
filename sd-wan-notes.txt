@@ -88,5 +88,56 @@ dispcnt -z -s mod_mp_flow
 
 
 
+VCO Troubleshooting:
+‘edge.control.plane.spread.factor’ set to 20. Because of this, control Plane configuration changes are pushed to the edge within 20 heartbeats (which is within 10 minutes).
+
+
+
+
+ATP config on VCO:
+
+ip route add 44.229.146.182 via 10.174.3.253 dev eth0
+ip route add 44.235.15.2 via 10.174.3.253 dev eth0
+
+ENI config on VCO:
+ip route add 104.196.147.253 via 10.174.3.253 dev eth0
+ip route add 52.89.159.180 via 10.174.3.253 dev eth0
+ip route add 35.165.146.161 via 10.174.3.253 dev eth0
+ip route add 44.226.124.202 via 10.174.3.253 dev eth0
+ip route add 35.163.129.19 via 10.174.3.253 dev eth0
+
+ENI verification on VCO VM:
+tail -f /var/log/portal/velocloud.log
+
+check for below logs:
+2023-08-23T22:15:20.590Z - info: [super@velocloud.net.169282823.4108] [6016] Service Account retrieved successfully.
+2023-08-23T22:15:20.603Z - info: [control.169282647.4506] [3200] 10.174.2.69 {"id":23,"jsonrpc":"2.0","method":"enterprise/getAnalyticsConfiguration","params":{"enterpriseId":1}}
+
+2023-08-23T22:15:20.692Z - info: [super@velocloud.net.169282647.4508] [3200] enterprise/getAnalyticsConfiguration success, elapsedTime: 71, dbTime: 103
+, otherTime: -32, dbCalls: 37, dbRowsRead: 72, dbRowsAffected: 0, validationTime: 0
+
+root@Sc-4K-DP-Scale-VCO:~# nslookup 'config.staging6.nyansa.com'
+Server:         10.148.20.5
+Address:        10.148.20.5#53
+
+Non-authoritative answer:
+config.staging6.nyansa.com      canonical name = k8s-enistagingalbexte-458d8ba7e3-412934239.us-west-2.elb.amazonaws.com.
+Name:   k8s-enistagingalbexte-458d8ba7e3-412934239.us-west-2.elb.amazonaws.com
+Address: 52.89.159.180
+Name:   k8s-enistagingalbexte-458d8ba7e3-412934239.us-west-2.elb.amazonaws.com
+Address: 35.165.146.161
+Name:   k8s-enistagingalbexte-458d8ba7e3-412934239.us-west-2.elb.amazonaws.com
+Address: 44.226.124.202
+
+root@Sc-4K-DP-Scale-VCO:~# 
+root@Sc-4K-DP-Scale-VCO:~# nslookup 'loupe-m.staging6.nyansa.com'
+Server:         10.148.20.5
+Address:        10.148.20.5#53
+
+Non-authoritative answer:
+loupe-m.staging6.nyansa.com     canonical name = k8s-staging6-eniroute-edcfd0ce40-79217b8576494a95.elb.us-west-2.amazonaws.com.
+Name:   k8s-staging6-eniroute-edcfd0ce40-79217b8576494a95.elb.us-west-2.amazonaws.com
+Address: 35.163.129.19
+
 
 
