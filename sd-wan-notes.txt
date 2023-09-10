@@ -1,0 +1,92 @@
+
+Drivers and Supported NICs:
+
+Virtual network functions created from physical NIC
+Allows physical NICs to be shared amongst VMs without sacrificing performance, since packets are switched in the hardware.
+Maximum 32 virtual functions (VFs) can be configured per pNIC.
+ixgbe-vf driver supports these NICs (and bonding): 10Gb NICs 82599, X520, X540, X550, X552.
+i40e-vf driver supports these NICs (bonding not supported): 10Gb NICs X710, 40Gb NICs XL710.
+
+DPDK is not enabled on DSL,GPON,PPOE,LTE and 610
+debug.py --dpdk_ports
+
+Linux Commands:
+Testing DNS 
+cat file.txt | xargs -P100 -I% dig % ?
+curl cheat.sh/vim
+
+
+Edge Troubleshooting:
+gdb /opt/vc/sbin/edged edged.143150.24.1690734374.core
+
+debug.py --timeout 300 --flow_d all 1.2.3.4 all
+
+
+debug.py --user_flow_dump all 10.0.1.25 all 1.2.3.4 all 100
+debug.py --flow_route_dump all all all <flowId>
+debug.py --gateways
+
+debug.py --pkt_tracker 10.0.1.25 any 1.2.3.4 any any 100 (check flow id in output)
+
+
+dbgctl -i | grep track | grep 1.2.3.4
+
+
+debug.py --arp (edged arp table)
+arp -a (Linux arp table)
+brctl show
+brctl showmacs br-network1
+cat /opt/vc/www/scripts/hardwareinfo.lua | grep LAN_LINKS
+DEFAULT_LAN_LINKS = {["GE1"] = "ge1",["GE2"] = "ge2"}
+
+
+dispcnt -s error -s drop -s missed -s fail -z
+
+debug.py --chat_stats | grep -i 1.2.3.4 -A 22 -B 12
+debug.py --link 
+
+edged Logs:
+/tmp/log
+egrep 10.0.1.25 edge*
+egrep 1.2.3.4 edge*
+
+dbgctl -if | grep 10.0.1.25   
+
+edge:Spoke-EDGE610-HA(active):/tmp/log# cat mgd.lo* | grep EDGE_TUNNEL_CAP_WARNING
+2023-08-17T10:18:29.216 INFO    [server (30903:MgdServer:34207)] Received event EDGE_TUNNEL_CAP_WARNING from edged
+2023-08-17T10:18:56.686 DEBUG   [heartbeat (30903:Heartbeat:34809)] Heartbeat: Config: properties:1691657470000,managementPlane:1691657440557,metaData:0,WAN:1692209146931,QOS:1691657479192,firewall:1692209146931,controlPlane:1692209496853,analyticsSettings:0,imageUpdate:1691657441911,deviceSettings:1692209496852,atpMetadata:0, Events: EDGE_INTERFACE_UP(Standby Edge Interface SFP1 is up serial number 234JV43),EDGE_TUNNEL_CAP_WARNING(Established tunnel count of 50 exceeds the VMware SD-WAN 'edge610-lte' device capacity of 50.Performance may be impacted.),EDGE_INTERFACE_UP(Standby Edge Interface GE4 is up serial number 234JV43),EDGE_INTERFACE_UP(Standby Edge Interface GE5 is up serial number 234JV43)
+
+
+
+GW Troubleshooting:
+NAT check:
+sudo /opt/vc/bin/getcntr -c memb.mod_mp_flow_t.obj_cnt -d gwd-mem
+
+Flow Dump
+
+debug.py --timeout 120 --flow_d all all all | grep 1.2.3.4
+
+debug.py --timeout 120 --flow_d all all all | grep -iE "FID|1.2.3.4"
+
+Identify enterprise if to check routing table.
+
+debug.py --peers
+
+check source subnets and dest subnets
+debug.py --routes | grep <EID>
+debug.py --pkt_tracker 10.0.1.25 any 1.2.3.4 any any 100
+/opt/vc/bin/dbgctl -i | grep track | grep 1.2.3.4
+
+NAT Entry
+debug.py --nat_dump <EID> all
+
+ 
+
+To check flows on GW:
+dispcnt -z -s mod_mp_flow
+
+
+
+
+
+
