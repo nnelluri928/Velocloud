@@ -1,0 +1,18 @@
+baseURL ="https://nnelluri928.github.io/blog-hugo/" 
+languageCode = 'en-us'
+title = 'Narasimha Hugo Site'
+theme = "m10c"
+
+[params]
+  author = "Narasimha Nelluri"
+  description = "A blog about all things technical."
+
+  [[params.social]]
+    icon = "github"
+    name = "GitHub"
+    url = "https://github.com/nnelluri928"
+
+  [[params.social]]
+    icon = "twitter"
+    name = "Twitter"
+    url = "https://twitter.com/nnelluri928"
